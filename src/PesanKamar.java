@@ -37,15 +37,15 @@ public class PesanKamar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblHargaSewaPesan = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        lblTotalBayarPesan = new javax.swing.JLabel();
+        btnKonfirmasiBayar = new javax.swing.JButton();
+        cmbPilihKamar = new javax.swing.JComboBox<>();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -112,9 +112,9 @@ public class PesanKamar extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Durasi (1 Bulan)");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Rp. 3.500.000");
+        lblHargaSewaPesan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblHargaSewaPesan.setForeground(new java.awt.Color(255, 255, 255));
+        lblHargaSewaPesan.setText("Rp. 3.500.000");
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Biaya Layanan");
@@ -134,14 +134,14 @@ public class PesanKamar extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("TOTAL PEMBAYARAN");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Rp.3.550.000");
+        lblTotalBayarPesan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTotalBayarPesan.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotalBayarPesan.setText("Rp.3.550.000");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 102, 102));
-        jButton1.setText("Konfirmasi & Bayar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnKonfirmasiBayar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnKonfirmasiBayar.setForeground(new java.awt.Color(0, 102, 102));
+        btnKonfirmasiBayar.setText("Konfirmasi & Bayar");
+        btnKonfirmasiBayar.addActionListener(this::btnKonfirmasiBayarActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -163,10 +163,8 @@ public class PesanKamar extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel8))
-                                .addGap(97, 97, 97)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)))))
+                                .addGap(84, 84, 84)
+                                .addComponent(lblHargaSewaPesan))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -175,10 +173,12 @@ public class PesanKamar extends javax.swing.JFrame {
                         .addComponent(jLabel11))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblTotalBayarPesan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(btnKonfirmasiBayar))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -187,7 +187,7 @@ public class PesanKamar extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(lblHargaSewaPesan)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -202,15 +202,15 @@ public class PesanKamar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTotalBayarPesan, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jButton1)
+                .addComponent(btnKonfirmasiBayar)
                 .addGap(0, 47, Short.MAX_VALUE))
         );
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kamar 1 ", "Kamar 2", "Kamar 3", "Kamar 4" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        cmbPilihKamar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbPilihKamar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kamar 1 ", "Kamar 2", "Kamar 3", "Kamar 4" }));
+        cmbPilihKamar.addActionListener(this::cmbPilihKamarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,7 +226,7 @@ public class PesanKamar extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbPilihKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -235,7 +235,7 @@ public class PesanKamar extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbPilihKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,13 +246,64 @@ public class PesanKamar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnKonfirmasiBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiBayarActionPerformed
+        try {
+    String nomorKamar = cmbPilihKamar.getSelectedItem().toString();
+    String hargaSewa = lblHargaSewaPesan.getText();
+    String totalBayar = lblTotalBayarPesan.getText();
+    
+    String usernameTiruan = nomorKamar.replace(" ", "").toLowerCase();
+    String passwordTiruan = "kost123";
+    
+    String barisData = usernameTiruan + "," + passwordTiruan + "," + nomorKamar + "," + hargaSewa + "\n";
+    
+    java.io.FileWriter fw = new java.io.FileWriter("akun_penghuni.txt", true);
+    fw.write(barisData);
+    fw.close();
+    
+    String pesanNotif = "=== BOOKING BERHASIL ===\n\n"
+                      + "Silahkan transfer pembayaran ke:\n"
+                      + "Bank BCA: 1234567890 a/n Pemilik Kost Mahal\n"
+                      + "Total: " + totalBayar + "\n\n"
+                      + "Gunakan Akun Ini Untuk Login Setelah Membayar:\n"
+                      + "Username: " + usernameTiruan + "\n"
+                      + "Password: " + passwordTiruan;
+                      
+    javax.swing.JOptionPane.showMessageDialog(this, pesanNotif);
+    
+    Login halamanLogin = new Login();
+    halamanLogin.setVisible(true);
+    halamanLogin.setLocationRelativeTo(null);
+    this.dispose();
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+} catch (Exception e) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+}
+    }//GEN-LAST:event_btnKonfirmasiBayarActionPerformed
+
+    private void cmbPilihKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPilihKamarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        String kamarDipilih = cmbPilihKamar.getSelectedItem().toString();
+String hargaBaru = "0";
+String totalBaru = "0";
+
+if (kamarDipilih.equals("Kamar 1")) {
+    hargaBaru = "Rp. 3.500.000";
+    totalBaru = "Rp. 3.550.000";
+} else if (kamarDipilih.equals("Kamar 2")) {
+    hargaBaru = "Rp. 4.000.000";
+    totalBaru = "Rp. 4.050.000";
+} else if (kamarDipilih.equals("Kamar 3")) {
+    hargaBaru = "Rp. 4.500.000";
+    totalBaru = "Rp. 4.050.000";
+} else {
+    hargaBaru = "Rp. 2.500.000";
+    totalBaru = "Rp. 2.550.000";
+}
+
+lblHargaSewaPesan.setText(hargaBaru);
+lblTotalBayarPesan.setText(totalBaru);
+    }//GEN-LAST:event_cmbPilihKamarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,18 +331,16 @@ public class PesanKamar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnKonfirmasiBayar;
+    private javax.swing.JComboBox<String> cmbPilihKamar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -299,5 +348,7 @@ public class PesanKamar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JLabel lblHargaSewaPesan;
+    private javax.swing.JLabel lblTotalBayarPesan;
     // End of variables declaration//GEN-END:variables
 }

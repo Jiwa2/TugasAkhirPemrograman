@@ -1,0 +1,2 @@
+kamar2,Bayar Kamar,Rp. 3.550.000,2026-06-13
+kamar1,Bayar Kamar,Rp. 3.500.000,2026-06-13
