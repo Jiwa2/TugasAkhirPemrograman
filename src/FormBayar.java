@@ -28,7 +28,7 @@ public class FormBayar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
-        btnRiwayat = new javax.swing.JButton();
+        btnKomplain = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -58,8 +58,8 @@ public class FormBayar extends javax.swing.JFrame {
         btnDashboard.setText("Dashboard");
         btnDashboard.addActionListener(this::btnDashboardActionPerformed);
 
-        btnRiwayat.setText("Riwayat Transaksi");
-        btnRiwayat.addActionListener(this::btnRiwayatActionPerformed);
+        btnKomplain.setText("Komplain Fasilitas");
+        btnKomplain.addActionListener(this::btnKomplainActionPerformed);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Screenshot 2026-06-13 101822.png"))); // NOI18N
         jLabel9.setText("jLabel9");
@@ -74,7 +74,7 @@ public class FormBayar extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDashboard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRiwayat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnKomplain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -95,7 +95,7 @@ public class FormBayar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnDashboard)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRiwayat)
+                .addComponent(btnKomplain)
                 .addContainerGap(199, Short.MAX_VALUE))
         );
 
@@ -242,13 +242,19 @@ public class FormBayar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNamaPenghuniActionPerformed
 
-    private void btnRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiwayatActionPerformed
+    private void btnKomplainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKomplainActionPerformed
 
-        RiwayatTransaksi halamanRiwayat = new RiwayatTransaksi();
-        halamanRiwayat.setVisible(true);
-        halamanRiwayat.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_btnRiwayatActionPerformed
+    String nama = txtNamaPenghuni.getText(); 
+    String kamar = txtNomorKamar.getText();
+    String harga = "0"; 
+
+
+    FormKomplain halamanKomplain = new FormKomplain(nama, kamar, harga);
+    halamanKomplain.setVisible(true);
+    halamanKomplain.setLocationRelativeTo(null);
+
+    this.dispose();
+    }//GEN-LAST:event_btnKomplainActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         HomePage halamanHome = new HomePage(namaUser, nomorKamar, hargaKamarAsli);
@@ -278,7 +284,7 @@ public class FormBayar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBayarSekarang;
     private javax.swing.JButton btnDashboard;
-    private javax.swing.JButton btnRiwayat;
+    private javax.swing.JButton btnKomplain;
     private javax.swing.JComboBox<String> cmbPilihanBayar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

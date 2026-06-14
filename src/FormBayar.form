@@ -138,7 +138,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnDashboard" alignment="1" max="32767" attributes="0"/>
                           <Component id="jLabel3" max="32767" attributes="0"/>
-                          <Component id="btnRiwayat" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnKomplain" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -163,7 +163,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnDashboard" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnRiwayat" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnKomplain" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="199" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -193,12 +193,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDashboardActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnRiwayat">
+            <Component class="javax.swing.JButton" name="btnKomplain">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Riwayat Transaksi"/>
+                <Property name="text" type="java.lang.String" value="Komplain Fasilitas"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRiwayatActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKomplainActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">

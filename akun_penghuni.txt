@@ -3,3 +3,5 @@ kamar3,kost123,Kamar 3,Rp. 4.500.000
 kamar4,kost123,Kamar 4,Rp. 2.500.000
 kamar2,kost123,Kamar 2,Rp. 4.000.000
 kamar1,kost123,Kamar 1 ,Rp. 3.500.000
+kamar4,kost123,Kamar 4,Rp. 2.500.000
+kamar1,kost123,Kamar 1 ,Rp. 3.500.000

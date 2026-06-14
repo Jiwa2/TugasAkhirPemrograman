@@ -1,18 +1,19 @@
 public class HomePage extends javax.swing.JFrame {
     
     private String namaLoginSkarang; 
+    private String hargaKamarAsli; // <-- TAMBAHKAN BARIS INI
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HomePage.class.getName());
 
     public HomePage(String namaUser, String noKamar, String hargaSewa) {
         initComponents();
         this.namaLoginSkarang = namaUser; 
+        this.hargaKamarAsli = hargaSewa; // <-- TAMBAHKAN BARIS INI agar data harga kesimpen
         
         lblNomerKamar.setText(noKamar);
         lblHargaSewa.setText("Sewa Bulan ini: " + hargaSewa);
         
         loadTabelAktivitas(namaLoginSkarang);
     }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -22,7 +23,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnRiwayat = new javax.swing.JButton();
+        btnKomplain = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnBayar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -59,9 +60,9 @@ public class HomePage extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("--------------------------------");
 
-        btnRiwayat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnRiwayat.setText("Riwayat Transaksi");
-        btnRiwayat.addActionListener(this::btnRiwayatActionPerformed);
+        btnKomplain.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnKomplain.setText("Komplain Fasilitas");
+        btnKomplain.addActionListener(this::btnKomplainActionPerformed);
 
         btnLogout.setBackground(new java.awt.Color(255, 0, 0));
         btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -85,7 +86,7 @@ public class HomePage extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnRiwayat))
+                        .addComponent(btnKomplain))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -109,7 +110,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnBayar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRiwayat)
+                .addComponent(btnKomplain)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(21, 21, 21))
@@ -325,12 +326,14 @@ if (opsi == javax.swing.JOptionPane.YES_OPTION) {
         this.dispose();
     }//GEN-LAST:event_btnBayarActionPerformed
 
-    private void btnRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiwayatActionPerformed
-        RiwayatTransaksi halamanRiwayat = new RiwayatTransaksi();
-halamanRiwayat.setVisible(true);
-halamanRiwayat.setLocationRelativeTo(null);
-this.dispose();
-    }//GEN-LAST:event_btnRiwayatActionPerformed
+    private void btnKomplainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKomplainActionPerformed
+                            
+        FormKomplain halamanKomplain = new FormKomplain(namaLoginSkarang, lblNomerKamar.getText(), hargaKamarAsli);
+        halamanKomplain.setVisible(true);
+        halamanKomplain.setLocationRelativeTo(null);
+        this.dispose();
+    
+    }//GEN-LAST:event_btnKomplainActionPerformed
 
     private void tblAktivitasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblAktivitasAncestorAdded
 
@@ -378,8 +381,8 @@ this.dispose();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBayar;
+    private javax.swing.JButton btnKomplain;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnRiwayat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
