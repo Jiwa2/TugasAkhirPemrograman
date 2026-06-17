@@ -1,2 +1,7 @@
 jiwa,kost123,Kamar 1 
 jiwa,kost123,Kamar 1 
+afdal,kost123,Kamar 1 
+afdal,kost123,Kamar 1 
+Afdal,kost123,Kamar 1 
+Yuda,kost123,Kamar 1 
+Afdal,kost123,Kamar 1 
