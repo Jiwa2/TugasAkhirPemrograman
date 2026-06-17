@@ -26,6 +26,7 @@ public class HomePage extends javax.swing.JFrame {
         btnKomplain = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnBayar = new javax.swing.JButton();
+        btnProfile = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -73,6 +74,10 @@ public class HomePage extends javax.swing.JFrame {
         btnBayar.setText("Bayar Tagihan");
         btnBayar.addActionListener(this::btnBayarActionPerformed);
 
+        btnProfile.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnProfile.setText("My profile");
+        btnProfile.addActionListener(this::btnProfileActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -85,16 +90,18 @@ public class HomePage extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnKomplain))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnKomplain, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -110,6 +117,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(btnBayar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnKomplain)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProfile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(21, 21, 21))
@@ -334,6 +343,16 @@ if (opsi == javax.swing.JOptionPane.YES_OPTION) {
 
     }//GEN-LAST:event_tblAktivitasAncestorAdded
 
+    private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
+    String namaLoginSkarang = this.namaLoginSkarang; 
+    String nomerKamarSkarang = lblNomerKamar.getText();
+
+    ProfilUser halamanProfil = new ProfilUser(namaLoginSkarang, nomerKamarSkarang);
+    halamanProfil.setVisible(true);
+    halamanProfil.setLocationRelativeTo(null);
+    this.dispose();
+    }//GEN-LAST:event_btnProfileActionPerformed
+
     public void loadTabelAktivitas(String namaLogin) {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblAktivitas.getModel();
         model.setRowCount(0); 
@@ -378,6 +397,7 @@ if (opsi == javax.swing.JOptionPane.YES_OPTION) {
     private javax.swing.JButton btnBayar;
     private javax.swing.JButton btnKomplain;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnProfile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
