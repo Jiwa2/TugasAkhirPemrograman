@@ -44,12 +44,11 @@ public class FormKomplain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel3.setText("Form Komplain");
 
-        jLabel4.setForeground(new java.awt.Color(0, 51, 153));
         jLabel4.setText("Sampaikan Kendala Fasilitas Anda. Kami akan segera Menindaklanjutin dalam 1x24 jam.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -72,7 +71,7 @@ public class FormKomplain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel2.setForeground(new java.awt.Color(0, 51, 153));
         jLabel2.setText("Nomor Kamar");
@@ -94,6 +93,7 @@ public class FormKomplain extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 51, 153));
         jLabel6.setText("Deskripsi Keluhan");
 
+        txtDeskripsi.setBackground(new java.awt.Color(204, 255, 204));
         txtDeskripsi.setForeground(new java.awt.Color(204, 204, 204));
         txtDeskripsi.setText("Jelaskan secara detail kendala yang Anda alami...");
         txtDeskripsi.addActionListener(this::txtDeskripsiActionPerformed);

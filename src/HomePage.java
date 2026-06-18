@@ -46,7 +46,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,6 +232,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addGap(51, 51, 51))
         );
 
+        tblAktivitas.setBackground(new java.awt.Color(255, 204, 204));
         tblAktivitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
