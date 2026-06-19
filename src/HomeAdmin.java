@@ -7,7 +7,10 @@
  *
  * @author Jiwa
  */
+import javax.swing.table.DefaultTableModel;
 public class HomeAdmin extends javax.swing.JFrame {
+    // Taruh di bawah baris class utama
+DefaultTableModel model;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HomeAdmin.class.getName());
 
@@ -16,8 +19,59 @@ public class HomeAdmin extends javax.swing.JFrame {
      */
     public HomeAdmin() {
         initComponents();
-
+        model = (DefaultTableModel) jTable1.getModel();
+        loadDariFileTeks();
     }
+    // Fungsi untuk MENYIMPAN seluruh data tabel ke file teks
+private void simpanKeFileTeks() {
+    try {
+        java.io.File file = new java.io.File("data_penghuni.txt");
+        java.io.FileWriter fw = new java.io.FileWriter(file);
+        java.io.BufferedWriter bw = new java.io.BufferedWriter(fw);
+        
+        // Looping baris dan kolom tabel
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                bw.write(jTable1.getValueAt(i, j).toString());
+                if (j < jTable1.getColumnCount() - 1) {
+                    bw.write("/"); // Menggunakan pembatas "/" antar kolom
+                }
+            }
+            bw.newLine(); // Baris baru untuk data selanjutnya
+        }
+        bw.close();
+        fw.close();
+    } catch (Exception e) {
+        System.out.println("Error saat menyimpan file: " + e.getMessage());
+    }
+}
+
+// Fungsi untuk MEMBACA data dari file teks ke tabel saat aplikasi dibuka
+private void loadDariFileTeks() {
+    try {
+        java.io.File file = new java.io.File("data_penghuni.txt");
+        if (!file.exists()) {
+            return; 
+        }
+        java.io.FileReader fr = new java.io.FileReader(file);
+        java.io.BufferedReader br = new java.io.BufferedReader(fr);
+        
+        String baris;
+        while ((baris = br.readLine()) != null) {
+            // VALIDASI: Jika baris kosong atau cuma spasi, skip (jangan dimasukkan ke tabel)
+            if (baris.trim().isEmpty()) {
+                continue;
+            }
+            
+            String[] dataKolom = baris.split("/"); 
+            model.addRow(dataKolom); 
+        }
+        br.close();
+        fr.close();
+    } catch (Exception e) {
+        System.out.println("Error saat membaca file: " + e.getMessage());
+    }
+}
 
 
     
@@ -59,18 +113,21 @@ public class HomeAdmin extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        btnInput = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
+        txtKamarPilihan = new javax.swing.JTextField();
+        txtTanggalBooking = new javax.swing.JTextField();
+        txtStatusPembayaran = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        cmbStatusPenghuni = new javax.swing.JComboBox<>();
+        btnSimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -305,29 +362,34 @@ public class HomeAdmin extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nama User", "Kamar Pilihan ", "Tanggal booking", "Status Pembayaran"
+                "Nama User", "Kamar Pilihan ", "Tanggal booking", "Status Pembayaran", "Status Penghuni"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton7.setBackground(new java.awt.Color(255, 204, 204));
-        jButton7.setText("INPUT");
+        btnInput.setBackground(new java.awt.Color(255, 204, 204));
+        btnInput.setText("INPUT");
+        btnInput.addActionListener(this::btnInputActionPerformed);
 
-        jButton9.setBackground(new java.awt.Color(204, 255, 204));
-        jButton9.setText("UPDATE");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
+        btnUpdate.setBackground(new java.awt.Color(204, 255, 204));
+        btnUpdate.setText("UPDATE");
+        btnUpdate.addActionListener(this::btnUpdateActionPerformed);
 
-        jButton10.setBackground(new java.awt.Color(204, 204, 255));
-        jButton10.setText("DELETE");
+        btnDelete.setBackground(new java.awt.Color(204, 204, 255));
+        btnDelete.setText("DELETE");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
-        jButton11.setBackground(new java.awt.Color(204, 153, 255));
-        jButton11.setText("CLEAR");
+        btnClear.setBackground(new java.awt.Color(204, 153, 255));
+        btnClear.setText("CLEAR");
+        btnClear.addActionListener(this::btnClearActionPerformed);
 
         jLabel10.setText("NAMA                           :");
 
@@ -337,14 +399,15 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jLabel17.setText("STATUS PEMBAYARAN :");
 
-        jTextField1.setText("jTextField1");
+        txtKamarPilihan.addActionListener(this::txtKamarPilihanActionPerformed);
 
-        jTextField2.setText("jTextField2");
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        jLabel18.setText("STATUS PENGHUNI       :");
 
-        jTextField3.setText("jTextField3");
+        cmbStatusPenghuni.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Penghuni Baru", "Penghuni Lama" }));
 
-        jTextField4.setText("jTextField4");
+        btnSimpan.setBackground(new java.awt.Color(255, 102, 102));
+        btnSimpan.setText("SIMPAN");
+        btnSimpan.addActionListener(this::btnSimpanActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -355,29 +418,38 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel12)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10)
-                            .addComponent(jButton9)
-                            .addComponent(jButton7)
-                            .addComponent(jButton11))
-                        .addGap(232, 232, 232))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                    .addComponent(txtTanggalBooking)
+                                    .addComponent(txtKamarPilihan)))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cmbStatusPenghuni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtStatusPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(213, 213, 213))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,31 +458,37 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
+                    .addComponent(btnInput)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jButton9)
+                        .addComponent(btnUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton10)
+                        .addComponent(btnDelete)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton11))
+                        .addComponent(btnClear))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtKamarPilihan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
+                            .addComponent(txtTanggalBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                            .addComponent(txtStatusPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(cmbStatusPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSimpan)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -421,19 +499,23 @@ public class HomeAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 73, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 91, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,9 +529,8 @@ public class HomeAdmin extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(24, 24, 24)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -481,13 +562,137 @@ public class HomeAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+                                          
+    int barisTerpilih = jTable1.getSelectedRow();
+    if(barisTerpilih == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Klik dulu salah satu baris di tabelnya!");
+        return;
+    }
+    
+    model.setValueAt(txtNama.getText(), barisTerpilih, 0);
+    model.setValueAt(txtKamarPilihan.getText(), barisTerpilih, 1);
+    model.setValueAt(txtTanggalBooking.getText(), barisTerpilih, 2);
+    model.setValueAt(txtStatusPembayaran.getText(), barisTerpilih, 3);
+    model.setValueAt(cmbStatusPenghuni.getSelectedItem().toString(), barisTerpilih, 4);
+    
+    // UPDATE juga isi file teksnya secara permanen
+    simpanKeFileTeks();
+    
+    // Clear form
+    txtNama.setText("");
+    txtKamarPilihan.setText("");
+    txtTanggalBooking.setText("");
+    txtStatusPembayaran.setText("");
+    cmbStatusPenghuni.setSelectedIndex(0);
+    
+    javax.swing.JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan permanen!");
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void txtKamarPilihanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKamarPilihanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtKamarPilihanActionPerformed
+
+    private void btnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputActionPerformed
+    String nama = txtNama.getText();
+    String kamar = txtKamarPilihan.getText();
+    String tanggal = txtTanggalBooking.getText();
+    String statusBayar = txtTanggalBooking.getText();
+    String statusPenghuni = cmbStatusPenghuni.getSelectedItem().toString(); // Combo Box
+    
+    // Validasi biar gak ada data kosong yang masuk
+    if(nama.isEmpty() || kamar.isEmpty() || tanggal.isEmpty() || statusBayar.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Waduh, isi semua form-nya dulu ya!");
+    } else {
+        // Masukkan data ke dalam baris tabel
+        model.addRow(new Object[]{nama, kamar, tanggal, statusBayar, statusPenghuni});
+        
+        // Panggil fungsi clear otomatis setelah sukses input
+        btnClearActionPerformed(evt);
+        javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan ke tabel!");
+    }
+    }//GEN-LAST:event_btnInputActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+                                        
+    txtNama.setText("");
+    txtKamarPilihan.setText("");
+    txtTanggalBooking.setText("");
+    txtTanggalBooking.setText("");
+    cmbStatusPenghuni.setSelectedIndex(0); // Balik ke pilihan pertama
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+                                             
+    int barisTerpilih = jTable1.getSelectedRow();
+    if(barisTerpilih == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Pilih baris data yang mau dihapus!");
+        return;
+    }
+    
+    int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, "Yakin mau hapus data ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+    if(konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+        model.removeRow(barisTerpilih);
+        
+        // UPDATE isi file teks setelah data dihapus dari tabel
+        simpanKeFileTeks();
+        
+        // Clear form
+        txtNama.setText("");
+        txtKamarPilihan.setText("");
+        txtTanggalBooking.setText("");
+        txtStatusPembayaran.setText("");
+        cmbStatusPenghuni.setSelectedIndex(0);
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Data sukses dihapus secara permanen!");
+    }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+                                          
+    String nama = txtNama.getText();
+    String kamar = txtKamarPilihan.getText();
+    String tanggal = txtTanggalBooking.getText();
+    String statusBayar = txtStatusPembayaran.getText();
+    String statusPenghuni = cmbStatusPenghuni.getSelectedItem().toString(); 
+    
+    if(nama.isEmpty() || kamar.isEmpty() || tanggal.isEmpty() || statusBayar.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Waduh, semua form harus diisi dulu ya!");
+    } else {
+        model.addRow(new Object[]{nama, kamar, tanggal, statusBayar, statusPenghuni});
+        
+        // PANGGIL fungsi simpan otomatis ke file teks
+        simpanKeFileTeks();
+        
+        // Bersihkan form inputan
+        txtNama.setText("");
+        txtKamarPilihan.setText("");
+        txtTanggalBooking.setText("");
+        txtStatusPembayaran.setText("");
+        cmbStatusPenghuni.setSelectedIndex(0);
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Mantap! Data penghuni baru permanen tersimpan.");
+    }
+
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+                                     
+    // Mengambil indeks baris yang diklik
+    int barisTerpilih = jTable1.getSelectedRow();
+    
+    // Pindahkan data dari kolom tabel ke dalam field inputan form
+    txtNama.setText(model.getValueAt(barisTerpilih, 0).toString());
+    txtKamarPilihan.setText(model.getValueAt(barisTerpilih, 1).toString());
+    txtTanggalBooking.setText(model.getValueAt(barisTerpilih, 2).toString()); // Sesuaikan indeks kolomnya jika terbalik
+    txtStatusPembayaran.setText(model.getValueAt(barisTerpilih, 3).toString());
+    
+    // Set nilai Combo Box berdasarkan data di tabel
+    String statusPenghuni = model.getValueAt(barisTerpilih, 4).toString();
+    cmbStatusPenghuni.setSelectedItem(statusPenghuni);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -515,16 +720,18 @@ public class HomeAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnInput;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbStatusPenghuni;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -534,6 +741,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -551,10 +759,10 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblNomorKamar;
+    private javax.swing.JTextField txtKamarPilihan;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtStatusPembayaran;
+    private javax.swing.JTextField txtTanggalBooking;
     // End of variables declaration//GEN-END:variables
 }
