@@ -238,16 +238,15 @@ public class FormKomplain extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDeskripsiActionPerformed
 
     private void btnKomplainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKomplainActionPerformed
+                                         
     String user = txtUsername.getText().trim();
     String kamar = txtNomorKamar.getText().trim();
     String judul = txtJudul.getText().trim();
-    String deskripsi = txtDeskripsi.getText().trim(); // Mengambil teks dari JTextArea
+    String deskripsi = txtDeskripsi.getText().trim(); 
     
-    // 2. Generate tanggal dan waktu komplain secara otomatis
     String tanggal = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm").format(new java.util.Date());
-    String status = "Pending"; // Status awal komplain
+    String status = "Pending"; 
 
-    // 3. Validasi: Jangan sampai subjek atau deskripsi keluhan kosong
     if (judul.isEmpty() || deskripsi.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, 
                 "Subjek/Judul dan Deskripsi komplain tidak boleh kosong!", 
@@ -255,30 +254,29 @@ public class FormKomplain extends javax.swing.JFrame {
         return;
     }
 
-    // 4. Proses menyimpan data komplain ke dalam file text
     try {
-        // Menyimpan ke file "data_komplain.txt". True artinya data baru akan ditambah di baris bawahnya
         java.io.FileWriter fw = new java.io.FileWriter("data_komplain.txt", true);
         java.io.BufferedWriter bw = new java.io.BufferedWriter(fw);
 
-        // Format simpan menggunakan pemisah pagar (#) agar tidak bentrok dengan tanda koma (,) di deskripsi
         String dataKomplain = tanggal + "#" + user + "#" + kamar + "#" + judul + "#" + deskripsi + "#" + status;
         
         bw.write(dataKomplain);
-        bw.newLine(); // Membuat baris baru untuk komplain berikutnya
-        bw.close();   // Menutup file writer
+        bw.newLine(); 
+        bw.close();   
 
-        // 5. Tampilkan notifikasi sukses ke user
         javax.swing.JOptionPane.showMessageDialog(this, 
                 "Komplain Anda berhasil dikirim!\nAdmin akan segera memeriksa laporan.", 
                 "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        // 6. Reset/kosongkan form inputan agar bisa diisi kembali
         txtJudul.setText("");
         txtDeskripsi.setText("");
 
+        HomePage halamanHome = new HomePage(user, kamar, "");
+        halamanHome.setVisible(true);
+        halamanHome.setLocationRelativeTo(null);
+        this.dispose();
+
     } catch (Exception e) {
-        // Tampilkan pop-up eror jika file tidak bisa ditulis atau diakses
         javax.swing.JOptionPane.showMessageDialog(this, 
                 "Gagal menyimpan komplain: " + e.getMessage(), 
                 "Error", javax.swing.JOptionPane.ERROR_MESSAGE);

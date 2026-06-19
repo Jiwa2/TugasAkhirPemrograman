@@ -112,6 +112,7 @@ public class FormBayar extends javax.swing.JFrame {
         jLabel7.setText("Nomor Kamar");
 
         cmbPilihanBayar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bayar Kamar", "Bayar iuran" }));
+        cmbPilihanBayar.setToolTipText("");
         cmbPilihanBayar.addActionListener(this::cmbPilihanBayarActionPerformed);
 
         jLabel8.setText("Pilihan Bayar");
@@ -210,20 +211,50 @@ public class FormBayar extends javax.swing.JFrame {
     java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String tanggalSkarang = java.time.LocalDate.now().format(dtf);
     
+    // 1. TETAP TULIS KE RIWAYAT TRANSAKSI USER
     String barisRiwayat = namaUser + "," + jenisBayar + "," + totalBayar + "," + tanggalSkarang + "\n";
-    
     java.io.FileWriter fw = new java.io.FileWriter("riwayat_transaksi.txt", true);
     fw.write(barisRiwayat);
     fw.close();
     
+    // 2. PROSES UPDATE STATUS DI DATA_BOOKING.TXT JADI "Lunas" UNTUK DASHBOARD ADMIN
+    java.io.File fileBooking = new java.io.File("data_booking.txt");
+    java.util.ArrayList<String> semuaBarisBooking = new java.util.ArrayList<>();
+    
+    if (fileBooking.exists()) {
+        // Baca semua data lama terlebih dahulu
+        java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(fileBooking));
+        String baris;
+        while ((baris = reader.readLine()) != null) {
+            String[] data = baris.split(",");
+            // Jika baris data tersebut milik user yang sedang bayar ini, dan statusnya masih "Belum Lunas"
+            if (data.length == 5 && data[0].equals(namaUser) && data[3].equalsIgnoreCase("Belum Lunas")) {
+                data[3] = "Lunas"; // Ubah status pembayarannya menjadi Lunas
+                baris = String.join(",", data); // Gabungkan kembali datanya memakai koma
+            }
+            semuaBarisBooking.add(baris);
+        }
+        reader.close();
+        
+        // Tulis ulang semua data yang sudah di-update kembali ke file data_booking.txt
+        java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(fileBooking, false)); // false = timpa file lama
+        for (String barisBaru : semuaBarisBooking) {
+            writer.write(barisBaru);
+            writer.newLine();
+        }
+        writer.close();
+    }
+    
+    // 3. TAMPILKAN NOTIFIKASI SUKSES
     String pesanNotif = "=== FORMULIR PEMBAYARAN ===\n\n"
                       + "Silahkan transfer pembayaran ke:\n"
                       + "Bank BCA: 1234567890 a/n Pemilik Kost Mahal\n"
                       + "Nominal: " + totalBayar + "\n\n"
-                      + "Status transaksi Anda akan segera diverifikasi.";
+                      + "Pembayaran Anda berhasil dicatat dan status di Dashboard Admin otomatis berubah menjadi LUNAS.";
                       
     javax.swing.JOptionPane.showMessageDialog(this, pesanNotif);
     
+    // Kembali ke HomePage
     HomePage halamanHome = new HomePage(namaUser, nomorKamar, hargaKamarAsli);
     halamanHome.setVisible(true);
     halamanHome.setLocationRelativeTo(null);

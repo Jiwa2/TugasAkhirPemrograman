@@ -4,16 +4,18 @@ public class HomePage extends javax.swing.JFrame {
     private String hargaKamarAsli; // <-- TAMBAHKAN BARIS INI
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HomePage.class.getName());
 
-    public HomePage(String namaUser, String noKamar, String hargaSewa) {
-        initComponents();
-        this.namaLoginSkarang = namaUser; 
-        this.hargaKamarAsli = hargaSewa; // <-- TAMBAHKAN BARIS INI agar data harga kesimpen
-        
-        lblNomerKamar.setText(noKamar);
-        lblHargaSewa.setText("Sewa Bulan ini: " + hargaSewa);
-        
-        loadTabelAktivitas(namaLoginSkarang);
-    }
+public HomePage(String namaUser, String noKamar, String hargaSewa) {
+    initComponents();
+    this.namaLoginSkarang = namaUser; 
+    this.hargaKamarAsli = hargaSewa; 
+    
+    jLabel2.setText("Hallo, " + namaUser); 
+    
+    lblNomerKamar.setText(noKamar);
+    lblHargaSewa.setText(hargaSewa);
+    
+    loadTabelAktivitas(namaLoginSkarang);
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -207,7 +209,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Iuran sampah DLL");
 
-        jLabel12.setText("Iuran Sampah DLL: Rp 20.000");
+        jLabel12.setText("Iuran Sampah DLL: Rp 50.000");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -349,6 +351,7 @@ if (opsi == javax.swing.JOptionPane.YES_OPTION) {
     String nomerKamarSkarang = lblNomerKamar.getText();
 
     ProfilUser halamanProfil = new ProfilUser(namaLoginSkarang, nomerKamarSkarang);
+
     halamanProfil.setVisible(true);
     halamanProfil.setLocationRelativeTo(null);
     this.dispose();

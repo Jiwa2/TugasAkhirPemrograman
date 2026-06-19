@@ -1,5 +1,0 @@
-
-Afdal,Bayar Kamar,1.500.000,2026-06-15
-Yuda,Bayar Kamar,1.500.000,2026-06-15
-jiwa,Bayar Kamar,1.500.000,2026-06-17
-jiwa,Bayar iuran,Rp. 20.000,2026-06-17

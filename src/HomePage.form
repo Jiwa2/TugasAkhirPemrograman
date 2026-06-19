@@ -415,7 +415,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Iuran Sampah DLL: Rp 20.000"/>
+                <Property name="text" type="java.lang.String" value="Iuran Sampah DLL: Rp 50.000"/>
               </Properties>
             </Component>
           </SubComponents>

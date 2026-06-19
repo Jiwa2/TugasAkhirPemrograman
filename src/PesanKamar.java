@@ -252,7 +252,6 @@ public class PesanKamar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnKonfirmasiBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiBayarActionPerformed
-                                                  
         String namaUserBaru = txtNamaUser.getText().trim();
         String passwordDefault = "kost123";
         
@@ -261,34 +260,51 @@ public class PesanKamar extends javax.swing.JFrame {
             return;
         }
 
-        String kamarDipilih = cmbPilihKamar.getSelectedItem().toString();
-        String totalBayar = lblTotalBayarPesan.getText(); // Ambil nominal total pembayaran dari label
+        String kamarDipilih = cmbPilihKamar.getSelectedItem().toString().trim(); // Tambah .trim() biar spasi hilang
+        String totalBayar = lblTotalBayarPesan.getText(); 
+        String hargaSewa = lblHargaSewaPesan.getText().replace("Rp. ", "").trim(); // Ambil angka harganya saja
 
-        // GABUNGAN NOTIFIKASI: INSTRUKSI TRANSFER + DETAIL AKUN BARU
+        // GABUNGAN NOTIFIKASI
         String pesanNotif = "--- INSTRUKSI PEMBAYARAN ---\n"
                           + "Total yang harus dibayar: " + totalBayar + "\n"
                           + "Silakan transfer ke rekening berikut:\n"
                           + "Bank BCA : 1234-5678-90 a.n PT Kost Mahal Jaya\n\n"
                           + "--------------------------------------------------------\n"
                           + "--- INFORMASI AKUN LOGIN ANDA ---\n"
-                          + "Silakan gunakan akun ini untuk masuk setelah transfer:\n"
+                          + "Silakan use akun ini untuk masuk setelah transfer:\n"
                           + "User : " + namaUserBaru + "\n"
                           + "Pw   : " + passwordDefault + "\n\n"
                           + "*Catatan: Harap simpan/screenshot username dan password Anda!";
         
         javax.swing.JOptionPane.showMessageDialog(this, pesanNotif, "Konfirmasi & Informasi Akun", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
+        // Ambil tanggal hari ini secara otomatis untuk data_booking.txt
+        String tanggalSekarang = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm").format(new java.util.Date());
+        String statusBayarAwal = "Belum Lunas";
+        String statusPenghuniAwal = "Penghuni Baru";
+
         // Proses simpan ke file text
         try {
-            java.io.FileWriter fw = new java.io.FileWriter("data_login.txt", true); 
-            java.io.BufferedWriter bw = new java.io.BufferedWriter(fw);
+            // 1. TETAP SIMPAN KE DATA_LOGIN.TXT (Untuk Hak Akses Login & Profile)
+            java.io.FileWriter fwLogin = new java.io.FileWriter("data_login.txt", true); 
+            java.io.BufferedWriter bwLogin = new java.io.BufferedWriter(fwLogin);
             
-            bw.write(namaUserBaru + "," + passwordDefault + "," + kamarDipilih);
-            bw.newLine();
-            bw.close();
+            // Format disesuaikan agar bisa dibaca halaman Login: user,pass,kamar,harga
+            bwLogin.write(namaUserBaru + "," + passwordDefault + "," + kamarDipilih + "," + hargaSewa);
+            bwLogin.newLine();
+            bwLogin.close();
+            
+            // 2. TAMBAHAN: SIMPAN JUGA KE DATA_BOOKING.TXT (Untuk Tabel Dashboard Admin)
+            java.io.FileWriter fwBooking = new java.io.FileWriter("data_booking.txt", true);
+            java.io.BufferedWriter bwBooking = new java.io.BufferedWriter(fwBooking);
+            
+            // Format disesuaikan kolom tabel admin: Nama,Kamar,Tanggal,StatusBayar,StatusPenghuni
+            bwBooking.write(namaUserBaru + "," + kamarDipilih + "," + tanggalSekarang + "," + statusBayarAwal + "," + statusPenghuniAwal);
+            bwBooking.newLine();
+            bwBooking.close();
             
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan akun baru: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + e.getMessage());
         }
 
         // Pindah ke halaman Login
@@ -296,31 +312,30 @@ public class PesanKamar extends javax.swing.JFrame {
         halamanLogin.setVisible(true);
         halamanLogin.setLocationRelativeTo(null);
         this.dispose();
-    
     }//GEN-LAST:event_btnKonfirmasiBayarActionPerformed
 
     private void cmbPilihKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPilihKamarActionPerformed
-        // TODO add your handling code here:
-        String kamarDipilih = cmbPilihKamar.getSelectedItem().toString();
-String hargaBaru = "0";
-String totalBaru = "0";
+        String kamarDipilih = cmbPilihKamar.getSelectedItem().toString().trim(); // .trim() mengantisipasi spasi liar di NetBeans
+        String hargaBaru = "0";
+        String totalBaru = "0";
 
-if (kamarDipilih.equals("Kamar 1")) {
-    hargaBaru = "Rp. 3.500.000";
-    totalBaru = "Rp. 3.550.000";
-} else if (kamarDipilih.equals("Kamar 2")) {
-    hargaBaru = "Rp. 4.000.000";
-    totalBaru = "Rp. 4.050.000";
-} else if (kamarDipilih.equals("Kamar 3")) {
-    hargaBaru = "Rp. 4.500.000";
-    totalBaru = "Rp. 4.050.000";
-} else {
-    hargaBaru = "Rp. 2.500.000";
-    totalBaru = "Rp. 2.550.000";
-}
+        if (kamarDipilih.equals("Kamar 1")) {
+            hargaBaru = "Rp. 3.500.000";
+            totalBaru = "Rp. 3.550.000";
+        } else if (kamarDipilih.equals("Kamar 2")) {
+            hargaBaru = "Rp. 4.000.000";
+            totalBaru = "Rp. 4.050.000";
+        } else if (kamarDipilih.equals("Kamar 3")) {
+            hargaBaru = "Rp. 4.500.000";
+            totalBaru = "Rp. 4.550.000"; // Diperbaiki dari 4.050.000
+        } else {
+            hargaBaru = "Rp. 2.500.000";
+            totalBaru = "Rp. 2.550.000";
+        }
 
-lblHargaSewaPesan.setText(hargaBaru);
-lblTotalBayarPesan.setText(totalBaru);
+        lblHargaSewaPesan.setText(hargaBaru);
+        lblTotalBayarPesan.setText(totalBaru);
+    
     }//GEN-LAST:event_cmbPilihKamarActionPerformed
 
     /**

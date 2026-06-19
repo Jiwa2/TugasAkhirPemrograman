@@ -29,6 +29,7 @@ public class Login extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
+        btnLoginAdmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +92,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel9.setText("Belum punya akun?");
 
+        btnLoginAdmin.setBackground(new java.awt.Color(102, 153, 255));
+        btnLoginAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoginAdmin.setText("Login Admin");
+        btnLoginAdmin.addActionListener(this::btnLoginAdminActionPerformed);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -108,10 +114,6 @@ public class Login extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel8))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -123,10 +125,17 @@ public class Login extends javax.swing.JFrame {
                                                     .addComponent(jLabel7)
                                                     .addGap(10, 10, 10)))
                                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel8))))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnLoginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -149,7 +158,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jCheckBox1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLoginAdmin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
@@ -170,7 +181,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(51, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -223,6 +234,10 @@ public class Login extends javax.swing.JFrame {
     String inputUser = txtUsername.getText();
     String inputPass = txtPassword.getText();
     boolean loginSukses = false;
+    
+    // Siapkan variabel untuk menampung data kamar dan harga asli dari file
+    String kamarAsli = "";
+    String hargaAsli = "";
 
     try {
         java.io.File file = new java.io.File("data_login.txt");
@@ -231,11 +246,15 @@ public class Login extends javax.swing.JFrame {
             String baris;
             
             while ((baris = br.readLine()) != null) {
-                String[] data = baris.split(","); // Memisahkan username dan password lewat koma
+                String[] data = baris.split(","); // data[0]=user, data[1]=pass, data[2]=noKamar, data[3]=harga
                 
-                // Cek apakah username dan password di file teks cocok sama yang diinput
+                // Cek apakah username dan password cocok
                 if (data[0].equals(inputUser) && data[1].equals(inputPass)) {
                     loginSukses = true;
+                    
+                    // Ambil data nomor kamar dan harga sewa asli dari baris file teks ini
+                    kamarAsli = data[2]; 
+                    hargaAsli = data[3];
                     break;
                 }
             }
@@ -247,8 +266,9 @@ public class Login extends javax.swing.JFrame {
 
     if (loginSukses) {
         javax.swing.JOptionPane.showMessageDialog(this, "Login Berhasil!");
-        // Buka HomePage bawa data inputUser
-        HomePage home = new HomePage(inputUser, "Kamar 01", "1.500.000"); // Contoh dummy parameter kamar & harga
+        
+        // SEKARANG PARAMETERNYA DINAMIS DIAMBIL DARI FILE TEXT (Bukan dummy "Kamar 01" lagi)
+        HomePage home = new HomePage(inputUser, kamarAsli, hargaAsli); 
         home.setVisible(true);
         home.setLocationRelativeTo(null);
         this.dispose();
@@ -256,7 +276,16 @@ public class Login extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Username atau Password Salah!", "Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAdminActionPerformed
+    HomeAdmin halamanAdmin = new HomeAdmin();
+    halamanAdmin.setVisible(true);
+    halamanAdmin.setLocationRelativeTo(null);
+    this.dispose();
+    }//GEN-LAST:event_btnLoginAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,6 +313,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoginAdmin;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
