@@ -114,7 +114,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial Black" size="36" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Kost Mahal"/>
+                <Property name="text" type="java.lang.String" value="Kost Nuansa"/>
               </Properties>
             </Component>
           </SubComponents>

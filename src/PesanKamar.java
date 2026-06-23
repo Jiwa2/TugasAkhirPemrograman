@@ -49,7 +49,7 @@ public class PesanKamar extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Kamar Mahal");
+        jLabel2.setText("Kost Nuansa");
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Screenshot 2026-06-13 101822.png"))); // NOI18N
 
