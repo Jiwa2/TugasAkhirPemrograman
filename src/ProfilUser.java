@@ -436,10 +436,14 @@ txtNomorKamar.setEditable(false);
     }//GEN-LAST:event_txtNomorKamarActionPerformed
 
     private void btnHomePageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePageActionPerformed
-        HomePage halamanHome = new HomePage("", "", "");
-    halamanHome.setVisible(true);
-    halamanHome.setLocationRelativeTo(null);
+        String hargaSewaDefault = "Rp 1.500.000"; 
+    
+    HomePage home = new HomePage(usernameAktif, nomorKamarAktif, hargaSewaDefault);
+    home.setVisible(true);
+    home.setLocationRelativeTo(null);
+    
     this.dispose();
+
     }//GEN-LAST:event_btnHomePageActionPerformed
 
     public static void main(String args[]) {

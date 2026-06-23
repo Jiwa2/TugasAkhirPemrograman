@@ -1,2 +1,3 @@
-fadly,Bayar Kamar,3.500.000,2026-06-23
-medina,Bayar Kamar,2.500.000,2026-06-23
+fadly,Bayar Kamar,4.000.000,2026-06-23
+iwang,Bayar Kamar,2.500.000,2026-06-23
+iwang,Bayar iuran,Rp. 20.000,2026-06-23
