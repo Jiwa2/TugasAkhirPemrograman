@@ -71,7 +71,7 @@ public class FormKomplain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel2.setForeground(new java.awt.Color(0, 51, 153));
         jLabel2.setText("Nomor Kamar");
@@ -93,7 +93,7 @@ public class FormKomplain extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 51, 153));
         jLabel6.setText("Deskripsi Keluhan");
 
-        txtDeskripsi.setBackground(new java.awt.Color(204, 255, 204));
+        txtDeskripsi.setBackground(new java.awt.Color(0, 102, 102));
         txtDeskripsi.setForeground(new java.awt.Color(204, 204, 204));
         txtDeskripsi.setText("Jelaskan secara detail kendala yang Anda alami...");
         txtDeskripsi.addActionListener(this::txtDeskripsiActionPerformed);
